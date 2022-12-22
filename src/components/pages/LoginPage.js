@@ -1,16 +1,18 @@
 import styled from 'styled-components';
 import axios from 'axios';
 import logo from '../../assets/imgs/logo.svg';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Input, Data } from '../../styles/constants/styledComponents';
 import { urlBaseLoginRegister } from '../../styles/constants/urls';
 import { useNavigate, Link } from 'react-router-dom';
+import {AuthContext} from '../providers/auth';
 
 export default function LoginPage(){
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const {setToken} = React.useContext(AuthContext);
 
     function login(event){
         event.preventDefault();
@@ -21,6 +23,7 @@ export default function LoginPage(){
         });
 
         promise.then(answer => goSubscriptions(answer.data.membership));
+        promise.then(answer => setToken({token: answer.data.token}));
         promise.catch(error => alert(`${error.response.data.message}`));
     };
 

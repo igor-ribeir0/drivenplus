@@ -3,8 +3,28 @@ import logoPlus from '../../assets/imgs/logoPlus.svg';
 import logoGold from '../../assets/imgs/logoGold.svg';
 import logoPlatinum from '../../assets/imgs/logoPlatinum.svg';
 import styled from 'styled-components';
+import { urlBaseSubscription } from '../../styles/constants/urls';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import {AuthContext} from '../providers/auth';
 
 export default function SubscriptionsPage(){
+
+    const {token} = React.useContext(AuthContext);
+    const [listPlans, setListPlans] = useState([]);
+
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token.token}`
+        }
+    }
+
+    useEffect(() => {
+        const promise = axios.get(`${urlBaseSubscription}`, config);
+        promise.then(answer => setListPlans(answer.data));
+        promise.catch(error => alert(`${error.response.data.message}`));
+    }, []);
+
     return(
         <Data>
             <Header>
@@ -12,20 +32,14 @@ export default function SubscriptionsPage(){
             </Header>
 
             <Content>
-                <Category>
-                    <img src={logoPlus} />
-                    <p>R$ 39,99</p>
-                </Category>
-
-                <Category>
-                    <img src={logoGold} />
-                    <p>R$ 39,99</p>
-                </Category>
-
-                <Category>
-                    <img src={logoPlatinum} />
-                    <p>R$ 39,99</p>
-                </Category>
+                {listPlans.map((plan) => {
+                    return(
+                        <Category key={plan.id}>
+                            <img src={plan.image} />
+                            <p>R$ {plan.price}</p>
+                        </Category>
+                    );
+                })};
             </Content>
 
         </Data>
