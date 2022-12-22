@@ -1,5 +1,6 @@
 import LoginPage from './components/pages/LoginPage';
 import RegisterPage from './components/pages/RegisterPage';
+import SubscriptionsPage from './components/pages/SubscriptionsPage';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
  export default function App() {
@@ -8,6 +9,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
             <Routes>
                 <Route path='/' element={<LoginPage />}/>
                 <Route path='/sign-up' element={<RegisterPage />}/>
+                <Route path='/subscriptions' element={<SubscriptionsPage />} />
             </Routes>
         </BrowserRouter>
     );
