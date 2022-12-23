@@ -1,12 +1,10 @@
 import { Data } from '../../styles/constants/styledComponents';
-import logoPlus from '../../assets/imgs/logoPlus.svg';
-import logoGold from '../../assets/imgs/logoGold.svg';
-import logoPlatinum from '../../assets/imgs/logoPlatinum.svg';
 import styled from 'styled-components';
 import { urlBaseSubscription } from '../../styles/constants/urls';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {AuthContext} from '../providers/auth';
+import { Link } from 'react-router-dom';
 
 export default function SubscriptionsPage(){
 
@@ -25,6 +23,7 @@ export default function SubscriptionsPage(){
         promise.catch(error => alert(`${error.response.data.message}`));
     }, []);
 
+
     return(
         <Data>
             <Header>
@@ -34,10 +33,12 @@ export default function SubscriptionsPage(){
             <Content>
                 {listPlans.map((plan) => {
                     return(
-                        <Category key={plan.id}>
-                            <img src={plan.image} />
-                            <p>R$ {plan.price}</p>
-                        </Category>
+                        <Link to={`/subscriptions/${plan.id}`} key={plan.id}>
+                            <Category>
+                                <img src={plan.image} />
+                                <p>R$ {plan.price}</p>
+                            </Category>
+                        </Link>
                     );
                 })};
             </Content>
@@ -94,5 +95,6 @@ margin-bottom: 10px;
         font-size: 24px;
         line-height: 28px;
         color: #FFFFFF;
+        text-decoration-line: none;
     }
 `;

@@ -22,16 +22,25 @@ color: #FFFFFF;
 margin: 20px 38px;
 font-size: 16px;
 font-weight: 700;
+display: flex;
+justify-content: center;
+align-items: center;
 `;
 
 export const Input = styled.input`
 width: 299px;
 height: 52px;
 background-color: #FFFFFF;
+border-radius: 10px;
 border: none;
 margin: 8px 38px;
+-moz-appearance: textfield;
+appearance: textfield;
     &::placeholder{
         color: #7E7E7E;
+    }
+    &::-webkit-inner-spin-button { 
+        -webkit-appearance: none;
     }
 `;
 
