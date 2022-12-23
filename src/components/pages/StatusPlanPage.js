@@ -3,13 +3,45 @@ import styled from 'styled-components';
 import logoPlus from '../../assets/imgs/logoPlus.svg';
 import clipBoard from '../../assets/imgs/clipboard.svg';
 import money from '../../assets/imgs/money.svg';
+import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { urlBaseSubscription } from '../../styles/constants/urls';
+import {AuthContext} from '../providers/auth';
+import axios from 'axios';
 
 export default function StatusPlanPage(){
+
+    const { idPlan } = useParams();
+    const {token} = React.useContext(AuthContext);
+    const [planTitle, setPlanTitle] = useState('');
+    const [imageName, setImageName] = useState('');
+    const [price, setPrice] = useState('');
+    const [benefitsList, setBenefitsList] = useState([]);
+
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token.token}`
+        }
+    };
+
+    useEffect(() => {
+        const promise = axios.get(`${urlBaseSubscription}/${idPlan}`, config);
+        promise.then(answer => getData(answer.data));
+        promise.catch(error => alert(`${error.response.data.message}`));
+    }, []);
+
+    function getData(answer){
+        setPlanTitle(answer.name);
+        setImageName(answer.image);
+        setPrice(answer.price);
+        setBenefitsList(answer.perks);
+    };
+
     return(
         <Data>
             <Header>
-                <img src={logoPlus} />
-                <h3>Driven Plus</h3>
+                <img src={imageName} />
+                <h3>{planTitle}</h3>
             </Header>
 
             <Benefit>
@@ -19,8 +51,9 @@ export default function StatusPlanPage(){
                 </div>
 
                 <ul>
-                    <li>1.Brindes exclusivos</li>
-                    <li>2.Materiais bônus de web</li>
+                    {benefitsList.map(benefit => 
+                        <li key={benefit.id}>{benefit.title}</li>)
+                    };
                 </ul>
             </Benefit>
 
@@ -31,7 +64,7 @@ export default function StatusPlanPage(){
                 </div>
                 
                 <ul>
-                    <li>R$ 39,99 cobrados mensalmente</li>
+                    <li>R$ {price} cobrados mensalmente</li>
                 </ul>
             </Benefit>
 
@@ -75,7 +108,7 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 margin-bottom: 8px;
-margin-top: -25px;
+margin-top: -45px;
     img{
         width: 139px;
         height: 95px;
@@ -89,6 +122,8 @@ margin-top: -25px;
         line-height: 37px;
         color: #FFFFFF;
         margin-top: 12px;
+        white-space: nowrap;
+        margin-left: -30px;
     }
 `;
 
