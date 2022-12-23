@@ -2,6 +2,8 @@ import { Data, Input, Button } from '../../styles/constants/styledComponents';
 import styled from 'styled-components';
 import clipBoard from '../../assets/imgs/clipboard.svg';
 import money from '../../assets/imgs/money.svg';
+import close from '../../assets/imgs/close.png';
+import back from '../../assets/imgs/back.png';
 import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { urlBaseSubscription } from '../../styles/constants/urls';
@@ -12,6 +14,7 @@ export default function StatusPlanPage(){
 
     const { idPlan } = useParams();
     const {token} = React.useContext(AuthContext);
+    const [appear, setAppear] = useState(true);
     const [planTitle, setPlanTitle] = useState('');
     const [imageName, setImageName] = useState('');
     const [price, setPrice] = useState('');
@@ -42,10 +45,12 @@ export default function StatusPlanPage(){
 
     function signature(event){
         event.preventDefault();
+        setAppear(true);
     };
 
     return(
         <Data>
+            <Back src={back} />
             <Header>
                 <img src={imageName} />
                 <h3>{planTitle}</h3>
@@ -82,6 +87,7 @@ export default function StatusPlanPage(){
                         value={nameCardOwner}
                         onChange={e => setNameCardOwner(e.target.value)}
                         placeholder='Nome impresso no cartão'
+                        disabled={appear}
                         required
                     />
                     <Input 
@@ -89,6 +95,7 @@ export default function StatusPlanPage(){
                         value={cardNumber}
                         onChange={e => setCardNumber(e.target.value)}
                         placeholder='Digitos do cartão'
+                        disabled={appear}
                         required
                     /> 
                     <div>
@@ -97,6 +104,7 @@ export default function StatusPlanPage(){
                             value={cardSafetyPassword}
                             onChange={e => setCardSafetyPassword(e.target.value)}
                             placeholder='Código de Segurança'
+                            disabled={appear}
                             required
                         />
                         <CardKey 
@@ -104,16 +112,23 @@ export default function StatusPlanPage(){
                             value={shelfLife}
                             onChange={e => setShelfLife(e.target.value)}
                             placeholder='Validade'
+                            disabled={appear}
                             required
                         />
                     </div>
-                    <Button type='submit'>
+                    <Button type='submit' disabled={appear}>
                         ASSINAR
                     </Button>
                 </form>
             </CardData>
 
-            <ConfirmSignature>
+            <ConfirmSignature appear={appear}>
+                <Menu>
+                    <CloseButton>
+                        <img src ={close} />
+                    </CloseButton>
+                </Menu>
+
                 <div>
                     <ContentConfirm>
                         <h2>Tem certeza que deseja</h2>
@@ -137,7 +152,7 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 margin-bottom: 8px;
-margin-top: -45px;
+margin-top: -30px;
     img{
         width: 139px;
         height: 95px;
@@ -235,7 +250,8 @@ appearance: textfield;
 
 const ConfirmSignature = styled.div`
 width: 100%;
-display: flex;
+display: ${props => props.appear? 'flex' : 'none'};
+flex-direction: column;
 justify-content: center;
 align-items: center;
     div{
@@ -244,7 +260,7 @@ align-items: center;
         background-color: #FFFFFF;
         border-radius: 10px;
         position: absolute;
-        bottom: 0;
+        bottom: 80px;
         left: auto;
         display: flex;
         flex-direction: column;
@@ -292,7 +308,7 @@ font-weight: 700;
 font-size: 12px;
 line-height: 10px;
 color: #FFFFFF;
-background-color: #7E7E7E;
+background-color: #CECECE;
 border-radius: 6px;
 border: none;
 margin-top: 50px;
@@ -313,3 +329,35 @@ border: none;
 margin-top: -59px;
 margin-left: 120px;
 `;
+
+const CloseButton = styled.button`
+width: 30px;
+height: 30px;
+background-color: #FFFFFF;
+border-radius: 5px;
+border: none;
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: -195px;
+margin-right: -300px;
+    img{
+        width: 30px;
+        height: 30px;
+    }
+`;
+
+const Back = styled.img`
+width: 30px;
+height: 30px;
+margin-top: -100px;
+margin-left: 10px;
+margin-bottom: 20px;
+`;
+
+const Menu = styled.div`
+width: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+`
