@@ -8,13 +8,16 @@ import { urlBaseSignature } from '../../styles/constants/urls';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 
-export default function HomePage(){
-
+export default function HomePage(props){
+    const { memberId } = props;
     const { token } = React.useContext(AuthContext);
+    const { image } = React.useContext(AuthContext);
     const { name } = React.useContext(AuthContext);
     const { cardCode } = React.useContext(AuthContext);
     const { cardSecurity } = React.useContext(AuthContext);
     const { cardExpiration } = React.useContext(AuthContext);
+    const { nameCard } = React.useContext(AuthContext);
+    const { benefitsTitle } = React.useContext(AuthContext);
     const navigate = useNavigate();
 
     const config = {
@@ -32,8 +35,8 @@ export default function HomePage(){
     function changePlan(){
         const promise = axios.post(`${urlBaseSignature}`, 
             {
-                membershipId: 1,
-                cardName: name.name,
+                membershipId: memberId,
+                cardName: nameCard.nameCard,
                 cardNumber: cardCode.cardCode,
                 securityNumber: cardSecurity.cardSecurity,
                 expirationDate: cardExpiration.cardExpiration
@@ -49,15 +52,15 @@ export default function HomePage(){
         <Data>
 
             <Header>
-                <PlanImage src={logoPlus} />
+                <PlanImage src={image.image} />
                 <Profile src={profileIcon} />
             </Header>
 
-            <Welcome><h3>Olá, fulano</h3></Welcome>
+            <Welcome><h3>Olá, {name.name}</h3></Welcome>
 
             <Benefits>
-                <PlanSettings>Solicitar brindes</PlanSettings>
-                <PlanSettings>Materiais bônus de web</PlanSettings>
+                {benefitsTitle.benefitsTitle.map(benefit =>
+                    <PlanSettings key={benefit.id}>{benefit.title}</PlanSettings>)}
             </Benefits>
 
             <Footer>
@@ -73,7 +76,7 @@ width: 100%;
 display: flex;
 justify-content: space-between;
 align-items: center;
-margin-top: -80px;
+margin-top: -40px;
 margin-bottom: 12px;
 `;
 

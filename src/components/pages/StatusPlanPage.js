@@ -11,17 +11,18 @@ import { urlBaseSignature } from '../../styles/constants/urls';
 import {AuthContext} from '../providers/auth';
 import axios from 'axios';
 
-export default function StatusPlanPage(){
-
+export default function StatusPlanPage(props){
+    const { memberId, setMemberId } = props;
     const { idPlan } = useParams();
 
     const { token } = React.useContext(AuthContext);
     const { setImage } = React.useContext(AuthContext);
-    const { setName } = React.useContext(AuthContext);
     const { setCardCode } = React.useContext(AuthContext);
     const { setCardSecurity } = React.useContext(AuthContext);
     const { setCardExpiration } = React.useContext(AuthContext);
+    const { setIdMember } = React.useContext(AuthContext);
     const { setBenefitsTitle } = React.useContext(AuthContext);
+    const { setNameCard } = React.useContext(AuthContext);
 
 
     const [appear, setAppear] = useState(false);
@@ -33,7 +34,6 @@ export default function StatusPlanPage(){
     const [cardNumber, setCardNumber] = useState('');
     const [cardSafetyPassword, setCardSafetyPassword] = useState();
     const [shelfLife, setShelfLife] = useState('');
-    const [memberId, setMemberId] = useState();
     const navigate = useNavigate();
 
     const config = {
@@ -45,15 +45,13 @@ export default function StatusPlanPage(){
     useEffect(() => {
         const promise = axios.get(`${urlBaseSubscription}/${idPlan}`, config);
         promise.then(answer => getData(answer.data));
+        promise.then(answer => setImage({image: answer.data.image}));
         promise.catch(error => alert(`${error.response.data.message}`));
     }, []);
 
     function getData(answer){
         setPlanTitle(answer.name);
-        setName({name: answer.name});
-
         setImageName(answer.image);
-        setImage({image: answer.image});
 
         setPrice(answer.price);
         setMemberId(answer.id);
@@ -82,6 +80,12 @@ export default function StatusPlanPage(){
     };
 
     function yesConfirm(){
+        setCardCode({cardCode: cardNumber});
+        setCardSecurity({cardSecurity: cardSafetyPassword});
+        setCardExpiration({cardExpiration: shelfLife});
+        setIdMember({idMember: memberId});
+        setNameCard({nameCard: nameCardOwner});
+
         const promise = axios.post(`${urlBaseSignature}`, {
             membershipId: memberId,
             cardName: nameCardOwner,
@@ -90,21 +94,12 @@ export default function StatusPlanPage(){
             expirationDate: shelfLife
         }, config);
 
-        setCardCode({cardCode: cardNumber});
-        setCardSecurity({cardSecurity: cardSafetyPassword});
-        setCardExpiration({cardExpiration: shelfLife});
-
         promise.then(goHome);
         promise.catch(error => alert(`${error.response.data.message}`));
     };
 
     function goHome(){
         navigate('/home');
-        setBenefitsList([]);
-        setNameCardOwner('');
-        setCardNumber('');
-        setCardSafetyPassword();
-        setShelfLife('');
     };
 
     return(

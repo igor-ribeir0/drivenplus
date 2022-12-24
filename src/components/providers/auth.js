@@ -32,6 +32,14 @@ export const AuthProvider = (props) => {
         cardExpiration: ''
     });
 
+    const [idMember, setIdMember] = useState({
+        idMember: ''
+    });
+
+    const [nameCard, setNameCard] = useState({
+        nameCard: ''
+    });
+
     return(
         <AuthContext.Provider 
             value={
@@ -42,7 +50,9 @@ export const AuthProvider = (props) => {
                     benefitsTitle, setBenefitsTitle,
                     cardCode, setCardCode,
                     cardSecurity, setCardSecurity,
-                    cardExpiration, setCardExpiration
+                    cardExpiration, setCardExpiration,
+                    idMember, setIdMember,
+                    nameCard, setNameCard
                 }}
         >
             {props.children}

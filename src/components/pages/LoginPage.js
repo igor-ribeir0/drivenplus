@@ -13,6 +13,9 @@ export default function LoginPage(){
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const {setToken} = React.useContext(AuthContext);
+    const { setImage } = React.useContext(AuthContext);
+    const { setName } = React.useContext(AuthContext);
+    const { setBenefitsTitle } = React.useContext(AuthContext);
 
     function login(event){
         event.preventDefault();
@@ -24,6 +27,9 @@ export default function LoginPage(){
 
         promise.then(answer => goSubscriptions(answer.data.membership));
         promise.then(answer => setToken({token: answer.data.token}));
+        promise.then(answer => setImage({image: answer.data.membership.image}));
+        promise.then(answer => setName({name: answer.data.name}));
+        promise.then(answer => setBenefitsTitle({benefitsTitle: answer.data.membership.perks}));
         promise.catch(error => alert(`${error.response.data.message}`));
     };
 
