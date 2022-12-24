@@ -7,13 +7,17 @@ import back from '../../assets/imgs/back.png';
 import { useParams, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { urlBaseSubscription } from '../../styles/constants/urls';
+import { urlBaseSignature } from '../../styles/constants/urls';
 import {AuthContext} from '../providers/auth';
 import axios from 'axios';
 
 export default function StatusPlanPage(){
 
     const { idPlan } = useParams();
-    const {token} = React.useContext(AuthContext);
+    const { token } = React.useContext(AuthContext);
+    const { setImage } = React.useContext(AuthContext);
+    const { setName } = React.useContext(AuthContext);
+    const { setBenefitsTitle } = React.useContext(AuthContext);
     const [appear, setAppear] = useState(false);
     const [planTitle, setPlanTitle] = useState('');
     const [imageName, setImageName] = useState('');
@@ -39,9 +43,15 @@ export default function StatusPlanPage(){
 
     function getData(answer){
         setPlanTitle(answer.name);
+        setName({name: answer.name});
+
         setImageName(answer.image);
+        setImage({image: answer.image});
+
         setPrice(answer.price);
+
         setBenefitsList(answer.perks);
+        setBenefitsTitle({benefitsTitle: answer.perks});
     };
 
     function signature(event){
@@ -57,7 +67,33 @@ export default function StatusPlanPage(){
         if(verify === false){
             navigate('/subscriptions');
         }
-    }
+    };
+
+    function noConfirm(){
+        setAppear(false);
+    };
+
+    function yesConfirm(){
+        const promise = axios.post(`${urlBaseSignature}`, {
+            membershipId: benefitsList.membershipId,
+            cardName: nameCardOwner,
+            cardNumber: cardNumber,
+            securityNumber: cardSafetyPassword,
+            expirationDate: shelfLife
+        }, config);
+
+        promise.then(goHome);
+        promise.catch(error => alert(`${error.response.data.message}`));
+    };
+
+    function goHome(){
+        setBenefitsList([]);
+        setNameCardOwner('');
+        setCardNumber('');
+        setCardSafetyPassword();
+        setShelfLife('');
+        navigate('/home');
+    };
 
     return(
         <Data>
@@ -149,8 +185,8 @@ export default function StatusPlanPage(){
                         <h3>assinar o plano</h3>
                         <h2>{planTitle} (R$ {price})?</h2>
 
-                        <NoButton>Não</NoButton>
-                        <YesButton>SIM</YesButton>
+                        <NoButton onClick={noConfirm}>Não</NoButton>
+                        <YesButton onClick={yesConfirm}>SIM</YesButton>
                     </ContentConfirm>
                 </div>
             </ConfirmSignature>

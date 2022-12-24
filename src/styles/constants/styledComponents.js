@@ -25,6 +25,7 @@ font-weight: 700;
 display: flex;
 justify-content: center;
 align-items: center;
+white-space: nowrap;
 `;
 
 export const Input = styled.input`

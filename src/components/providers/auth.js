@@ -8,8 +8,22 @@ export const AuthProvider = (props) => {
         token: ''
     });
 
+    const [image, setImage] = useState({
+        image: ''
+    });
+
+    const [name, setName] = useState({
+        name: ''
+    });
+
+    const [benefitsTitle, setBenefitsTitle] = useState({
+        benefitsTitle: ''
+    });
+
     return(
-        <AuthContext.Provider value={{token, setToken}}>
+        <AuthContext.Provider 
+            value={{token, setToken, image, setImage, name, setName, benefitsTitle, setBenefitsTitle}}
+        >
             {props.children}
         </AuthContext.Provider>
     );

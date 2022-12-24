@@ -15,7 +15,7 @@ export default function SubscriptionsPage(){
         headers: {
             "Authorization": `Bearer ${token.token}`
         }
-    }
+    };
 
     useEffect(() => {
         const promise = axios.get(`${urlBaseSubscription}`, config);
