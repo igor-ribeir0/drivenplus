@@ -4,7 +4,7 @@ import clipBoard from '../../assets/imgs/clipboard.svg';
 import money from '../../assets/imgs/money.svg';
 import close from '../../assets/imgs/close.png';
 import back from '../../assets/imgs/back.png';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { urlBaseSubscription } from '../../styles/constants/urls';
 import {AuthContext} from '../providers/auth';
@@ -14,7 +14,7 @@ export default function StatusPlanPage(){
 
     const { idPlan } = useParams();
     const {token} = React.useContext(AuthContext);
-    const [appear, setAppear] = useState(true);
+    const [appear, setAppear] = useState(false);
     const [planTitle, setPlanTitle] = useState('');
     const [imageName, setImageName] = useState('');
     const [price, setPrice] = useState('');
@@ -23,6 +23,7 @@ export default function StatusPlanPage(){
     const [cardNumber, setCardNumber] = useState('');
     const [cardSafetyPassword, setCardSafetyPassword] = useState();
     const [shelfLife, setShelfLife] = useState('');
+    const navigate = useNavigate();
 
     const config = {
         headers: {
@@ -48,9 +49,22 @@ export default function StatusPlanPage(){
         setAppear(true);
     };
 
+    function closeConfirmWindow(){
+        setAppear(false);
+    };
+
+    function backPage(verify){
+        if(verify === false){
+            navigate('/subscriptions');
+        }
+    }
+
     return(
         <Data>
-            <Back src={back} />
+            <BackBox onClick={() => backPage(appear)}>
+                <Back src={back} />
+            </BackBox>
+
             <Header>
                 <img src={imageName} />
                 <h3>{planTitle}</h3>
@@ -124,8 +138,8 @@ export default function StatusPlanPage(){
 
             <ConfirmSignature appear={appear}>
                 <Menu>
-                    <CloseButton>
-                        <img src ={close} />
+                    <CloseButton onClick={closeConfirmWindow}>
+                        <img src ={close}/>
                     </CloseButton>
                 </Menu>
 
@@ -152,7 +166,7 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 margin-bottom: 8px;
-margin-top: -30px;
+margin-top: -20px;
     img{
         width: 139px;
         height: 95px;
@@ -278,7 +292,7 @@ align-items: center;
         height: 30px;
         font-family: 'Roboto', sans-serif;
         font-weight: 700;
-        font-size: 20px;
+        font-size: 18px;
         line-height: 20px;
         color: #000000;
         margin-top: 30px;
@@ -290,7 +304,7 @@ align-items: center;
         height: 30px;
         font-family: 'Roboto', sans-serif;
         font-weight: 700;
-        font-size: 20px;
+        font-size: 18px;
         line-height: 20px;
         color: #000000;
         margin-top: -5px;
@@ -350,9 +364,8 @@ margin-right: -300px;
 const Back = styled.img`
 width: 30px;
 height: 30px;
-margin-top: -100px;
+margin-top: 0px;
 margin-left: 10px;
-margin-bottom: 20px;
 `;
 
 const Menu = styled.div`
@@ -360,4 +373,11 @@ width: 100%;
 display: flex;
 justify-content: space-between;
 align-items: center;
+`;
+
+const BackBox = styled.div`
+width: 60px;
+height: 40px;
+margin-top: -90px;
+margin-bottom: 20px;
 `

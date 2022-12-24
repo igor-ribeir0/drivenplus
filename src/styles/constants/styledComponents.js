@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledMain = styled.main`
 width: 375px;
-height: 667px;
+height: 699px;
 background-color: #000000;
 display: flex;
 flex-direction: column;
