@@ -2,8 +2,49 @@ import { Data } from '../../styles/constants/styledComponents';
 import logoPlus from '../../assets/imgs/logoPlus.svg';
 import profileIcon from '../../assets/imgs/profileIcon.svg'
 import styled from 'styled-components';
+import {AuthContext} from '../providers/auth';
+import axios from 'axios';
+import { urlBaseSignature } from '../../styles/constants/urls';
+import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 export default function HomePage(){
+
+    const { token } = React.useContext(AuthContext);
+    const { name } = React.useContext(AuthContext);
+    const { cardCode } = React.useContext(AuthContext);
+    const { cardSecurity } = React.useContext(AuthContext);
+    const { cardExpiration } = React.useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token.token}`
+        }
+    };
+
+    function cancelPlan(){
+        const promise = axios.delete(`${urlBaseSignature}`, config);
+        promise.then(() => navigate('/subscriptions'));
+        promise.catch(error => alert(`${error.response.data.message}`));
+    };
+
+    function changePlan(){
+        const promise = axios.post(`${urlBaseSignature}`, 
+            {
+                membershipId: 1,
+                cardName: name.name,
+                cardNumber: cardCode.cardCode,
+                securityNumber: cardSecurity.cardSecurity,
+                expirationDate: cardExpiration.cardExpiration
+            }, 
+            config
+        );
+
+        promise.then(() => navigate('/subscriptions'));
+        promise.catch(error => alert(`${error.response.data.message}`));
+    };
+
     return(
         <Data>
 
@@ -20,8 +61,8 @@ export default function HomePage(){
             </Benefits>
 
             <Footer>
-                <PlanSettings>Mudar plano</PlanSettings>
-                <CancelPlan>Cancelar plano</CancelPlan>
+                <PlanSettings onClick={changePlan}>Mudar plano</PlanSettings>
+                <CancelPlan onClick={cancelPlan}>Cancelar plano</CancelPlan>
             </Footer>
         </Data>
     );

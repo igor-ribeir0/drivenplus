@@ -14,10 +14,16 @@ import axios from 'axios';
 export default function StatusPlanPage(){
 
     const { idPlan } = useParams();
+
     const { token } = React.useContext(AuthContext);
     const { setImage } = React.useContext(AuthContext);
     const { setName } = React.useContext(AuthContext);
+    const { setCardCode } = React.useContext(AuthContext);
+    const { setCardSecurity } = React.useContext(AuthContext);
+    const { setCardExpiration } = React.useContext(AuthContext);
     const { setBenefitsTitle } = React.useContext(AuthContext);
+
+
     const [appear, setAppear] = useState(false);
     const [planTitle, setPlanTitle] = useState('');
     const [imageName, setImageName] = useState('');
@@ -27,6 +33,7 @@ export default function StatusPlanPage(){
     const [cardNumber, setCardNumber] = useState('');
     const [cardSafetyPassword, setCardSafetyPassword] = useState();
     const [shelfLife, setShelfLife] = useState('');
+    const [memberId, setMemberId] = useState();
     const navigate = useNavigate();
 
     const config = {
@@ -49,6 +56,7 @@ export default function StatusPlanPage(){
         setImage({image: answer.image});
 
         setPrice(answer.price);
+        setMemberId(answer.id);
 
         setBenefitsList(answer.perks);
         setBenefitsTitle({benefitsTitle: answer.perks});
@@ -75,24 +83,28 @@ export default function StatusPlanPage(){
 
     function yesConfirm(){
         const promise = axios.post(`${urlBaseSignature}`, {
-            membershipId: benefitsList.membershipId,
+            membershipId: memberId,
             cardName: nameCardOwner,
             cardNumber: cardNumber,
             securityNumber: cardSafetyPassword,
             expirationDate: shelfLife
         }, config);
 
+        setCardCode({cardCode: cardNumber});
+        setCardSecurity({cardSecurity: cardSafetyPassword});
+        setCardExpiration({cardExpiration: shelfLife});
+
         promise.then(goHome);
         promise.catch(error => alert(`${error.response.data.message}`));
     };
 
     function goHome(){
+        navigate('/home');
         setBenefitsList([]);
         setNameCardOwner('');
         setCardNumber('');
         setCardSafetyPassword();
         setShelfLife('');
-        navigate('/home');
     };
 
     return(

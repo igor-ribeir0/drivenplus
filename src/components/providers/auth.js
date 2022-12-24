@@ -20,9 +20,30 @@ export const AuthProvider = (props) => {
         benefitsTitle: ''
     });
 
+    const [cardCode, setCardCode] = useState({
+        cardCode: ''
+    });
+
+    const [cardSecurity, setCardSecurity] = useState({
+        cardSecurity: ''
+    });
+
+    const [cardExpiration, setCardExpiration] = useState({
+        cardExpiration: ''
+    });
+
     return(
         <AuthContext.Provider 
-            value={{token, setToken, image, setImage, name, setName, benefitsTitle, setBenefitsTitle}}
+            value={
+                {
+                    token, setToken, 
+                    image, setImage, 
+                    name, setName, 
+                    benefitsTitle, setBenefitsTitle,
+                    cardCode, setCardCode,
+                    cardSecurity, setCardSecurity,
+                    cardExpiration, setCardExpiration
+                }}
         >
             {props.children}
         </AuthContext.Provider>
