@@ -12,7 +12,7 @@ import { useState } from 'react';
     return(
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<LoginPage />}/>
+                <Route path='/' element={<LoginPage setMemberId={setMemberId}/>}/>
                 <Route path='/sign-up' element={<RegisterPage />}/>
                 <Route path='/subscriptions' element={<SubscriptionsPage />} />
                 <Route path='/subscriptions/:idPlan' element={

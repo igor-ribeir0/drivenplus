@@ -7,7 +7,8 @@ import { urlBaseLoginRegister } from '../../styles/constants/urls';
 import { useNavigate, Link } from 'react-router-dom';
 import {AuthContext} from '../providers/auth';
 
-export default function LoginPage(){
+export default function LoginPage(props){
+    const { setMemberId } = props;
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,12 +29,14 @@ export default function LoginPage(){
         promise.then(answer => goSubscriptions(answer.data.membership));
         promise.then(answer => setToken({token: answer.data.token}));
         promise.then(answer => setImage({image: answer.data.membership.image}));
+        promise.then(answer => setMemberId(answer.data.membership.id));
         promise.then(answer => setName({name: answer.data.name}));
         promise.then(answer => setBenefitsTitle({benefitsTitle: answer.data.membership.perks}));
         promise.catch(error => alert(`${error.response.data.message}`));
     };
 
     function goSubscriptions(membership){
+
         if(membership === null){
             navigate('/subscriptions');
         }

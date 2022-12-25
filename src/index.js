@@ -15,6 +15,6 @@ root.render(
         <App />
       </StyledMain>
 
-      </AuthProvider>
+    </AuthProvider>
   </React.StrictMode>
 );

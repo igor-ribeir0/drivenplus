@@ -3,6 +3,14 @@ import React, {useState} from 'react';
 export const AuthContext = React.createContext({});
 
 export const AuthProvider = (props) => {
+
+    const keepsAuth = JSON.parse(localStorage.getItem('auth'));
+    const [auth, setAuth] = useState(keepsAuth);
+
+    function login(authData){
+        setAuth(authData);
+        localStorage.setItem('auth', JSON.stringify(authData));
+    };
     
     const [token, setToken] = useState({
         token: ''
@@ -44,6 +52,7 @@ export const AuthProvider = (props) => {
         <AuthContext.Provider 
             value={
                 {
+                    auth, login, 
                     token, setToken, 
                     image, setImage, 
                     name, setName, 
@@ -53,7 +62,8 @@ export const AuthProvider = (props) => {
                     cardExpiration, setCardExpiration,
                     idMember, setIdMember,
                     nameCard, setNameCard
-                }}
+                }
+            }
         >
             {props.children}
         </AuthContext.Provider>

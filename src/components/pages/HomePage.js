@@ -60,7 +60,10 @@ export default function HomePage(props){
 
             <Benefits>
                 {benefitsTitle.benefitsTitle.map(benefit =>
-                    <PlanSettings key={benefit.id}>{benefit.title}</PlanSettings>)}
+                    <LinkBenefit target = "_blank" href={benefit.link} key={benefit.id}>
+                        <PlanSettings>{benefit.title}</PlanSettings>
+                    </LinkBenefit>
+                )}
             </Benefits>
 
             <Footer>
@@ -163,3 +166,8 @@ justify-content: center;
 align-items: center;
 white-space: nowrap;
 `;
+
+const LinkBenefit = styled.a`
+text-align: none;
+text-decoration: none;
+`
