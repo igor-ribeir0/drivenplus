@@ -24,9 +24,7 @@ export const AuthProvider = (props) => {
         name: ''
     });
 
-    const [benefitsTitle, setBenefitsTitle] = useState({
-        benefitsTitle: ''
-    });
+    const [benefitsTitle, setBenefitsTitle] = useState([]);
 
     const [cardCode, setCardCode] = useState({
         cardCode: ''

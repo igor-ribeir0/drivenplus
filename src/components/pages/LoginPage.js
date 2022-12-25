@@ -31,7 +31,7 @@ export default function LoginPage(props){
         promise.then(answer => setImage({image: answer.data.membership.image}));
         promise.then(answer => setMemberId(answer.data.membership.id));
         promise.then(answer => setName({name: answer.data.name}));
-        promise.then(answer => setBenefitsTitle({benefitsTitle: answer.data.membership.perks}));
+        promise.then(answer => setBenefitsTitle(answer.data.membership.perks));
         promise.catch(error => alert(`${error.response.data.message}`));
     };
 

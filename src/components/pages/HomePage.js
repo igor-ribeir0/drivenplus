@@ -59,7 +59,7 @@ export default function HomePage(props){
             <Welcome><h3>Olá, {name.name}</h3></Welcome>
 
             <Benefits>
-                {benefitsTitle.benefitsTitle.map(benefit =>
+                {benefitsTitle.map(benefit =>
                     <LinkBenefit target = "_blank" href={benefit.link} key={benefit.id}>
                         <PlanSettings>{benefit.title}</PlanSettings>
                     </LinkBenefit>

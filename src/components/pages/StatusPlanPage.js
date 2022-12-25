@@ -57,7 +57,7 @@ export default function StatusPlanPage(props){
         setMemberId(answer.id);
 
         setBenefitsList(answer.perks);
-        setBenefitsTitle({benefitsTitle: answer.perks});
+        setBenefitsTitle(answer.perks);
     };
 
     function signature(event){
