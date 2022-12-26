@@ -1,5 +1,4 @@
 import { Data } from '../../styles/constants/styledComponents';
-import logoPlus from '../../assets/imgs/logoPlus.svg';
 import profileIcon from '../../assets/imgs/profileIcon.svg'
 import styled from 'styled-components';
 import {AuthContext} from '../providers/auth';

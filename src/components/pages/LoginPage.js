@@ -10,13 +10,17 @@ import {AuthContext} from '../providers/auth';
 export default function LoginPage(props){
     const { setMemberId } = props;
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+    const { keepsToken } = React.useContext(AuthContext);
+    const { token } = React.useContext(AuthContext);
     const {setToken} = React.useContext(AuthContext);
     const { setImage } = React.useContext(AuthContext);
     const { setName } = React.useContext(AuthContext);
     const { setBenefitsTitle } = React.useContext(AuthContext);
+
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     function login(event){
         event.preventDefault();
@@ -33,10 +37,11 @@ export default function LoginPage(props){
         promise.then(answer => setName({name: answer.data.name}));
         promise.then(answer => setBenefitsTitle(answer.data.membership.perks));
         promise.catch(error => alert(`${error.response.data.message}`));
+
+        keepsToken(token.token);
     };
 
     function goSubscriptions(membership){
-
         if(membership === null){
             navigate('/subscriptions');
         }
