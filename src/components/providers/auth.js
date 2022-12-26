@@ -8,7 +8,7 @@ export const AuthProvider = (props) => {
         token: ''
     });
 
-    const tokenLocalStorage = useState('getToken');
+    const tokenLocalStorage = localStorage.getItem('getToken');
 
     function keepsToken(token){
         localStorage.setItem('getToken', token);

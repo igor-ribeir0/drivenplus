@@ -36,8 +36,12 @@ export default function LoginPage(props){
         promise.then(answer => setMemberId(answer.data.membership.id));
         promise.then(answer => setName({name: answer.data.name}));
         promise.then(answer => setBenefitsTitle(answer.data.membership.perks));
+        promise.then(answer => keepsToken(answer.data.token));
+        promise.then(answer => console.log(answer.data.token));
         promise.catch(error => alert(`${error.response.data.message}`));
-
+    };
+    
+    if(token.token === null){
         keepsToken(token.token);
     };
 
