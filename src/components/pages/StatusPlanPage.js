@@ -23,6 +23,7 @@ export default function StatusPlanPage(props){
     const { setBenefitsTitle } = React.useContext(AuthContext);
     const { setNameCard } = React.useContext(AuthContext);
     const { getToken } = React.useContext(AuthContext);
+    const { token } = React.useContext(AuthContext);
 
 
     const [appear, setAppear] = useState(false);

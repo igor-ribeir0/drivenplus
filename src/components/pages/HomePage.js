@@ -11,6 +11,7 @@ export default function HomePage(props){
     const { memberId } = props;
     const { getToken } = React.useContext(AuthContext);
     const { getImage } = React.useContext(AuthContext);
+    const { getName } = React.useContext(AuthContext);
     const { image } = React.useContext(AuthContext);
     const { name } = React.useContext(AuthContext);
     const { cardCode } = React.useContext(AuthContext);
@@ -18,6 +19,7 @@ export default function HomePage(props){
     const { cardExpiration } = React.useContext(AuthContext);
     const { nameCard } = React.useContext(AuthContext);
     const { benefitsTitle } = React.useContext(AuthContext);
+    const { token } = React.useContext(AuthContext);
     const navigate = useNavigate();
 
     const config = {
@@ -52,7 +54,7 @@ export default function HomePage(props){
         <Data>
 
             <Header>
-                <PlanImage src={getImage} />
+                <PlanImage src={image.image} />
                 <Profile src={profileIcon} />
             </Header>
 

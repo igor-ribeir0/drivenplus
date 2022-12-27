@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 export default function SubscriptionsPage(){
 
+    const { token } = React.useContext(AuthContext);
     const [listPlans, setListPlans] = useState([]);
     const { getToken } = React.useContext(AuthContext);
 
