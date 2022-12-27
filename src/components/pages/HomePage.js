@@ -22,7 +22,7 @@ export default function HomePage(props){
 
     const config = {
         headers: {
-            "Authorization": `Bearer ${getToken}`
+            "Authorization": `Bearer ${token.token}`
         }
     };
 

@@ -14,7 +14,7 @@ export default function SubscriptionsPage(){
 
     const config = {
         headers: {
-            "Authorization": `Bearer ${getToken}`
+            "Authorization": `Bearer ${token.token}`
         }
     };
 
