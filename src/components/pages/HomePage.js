@@ -10,8 +10,6 @@ import React from 'react';
 export default function HomePage(props){
     const { memberId } = props;
     const { getToken } = React.useContext(AuthContext);
-    const { getImage } = React.useContext(AuthContext);
-    const { getName } = React.useContext(AuthContext);
     const { image } = React.useContext(AuthContext);
     const { name } = React.useContext(AuthContext);
     const { cardCode } = React.useContext(AuthContext);

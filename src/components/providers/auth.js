@@ -14,24 +14,6 @@ export const AuthProvider = (props) => {
         };
     };
 
-
-    /*IMAGE LOCAL STORAGE*/
-    const imageLocalStorage = localStorage.getItem('getImage');
-    const [getImage, setGetImage] = useState(imageLocalStorage);
-
-    function keepsImage(image){
-        localStorage.setItem('getImage', image);
-    };
-
-
-    /*NAME LOCAL STORAGE*/
-    const nameLocalStorage = localStorage.getItem('getName');
-    const [getName, setGetName] = useState(nameLocalStorage);
-
-    function keepsName(name){
-        localStorage.setItem('getName', name);
-    };
-
     const [token, setToken] = useState({
         token: ''
     });
@@ -71,8 +53,6 @@ export const AuthProvider = (props) => {
             value={
                 {
                     keepsToken, getToken, setGetToken,
-                    keepsImage, getImage, setGetImage,
-                    keepsName, getName, setGetName,
                     token, setToken, 
                     image, setImage, 
                     name, setName, 

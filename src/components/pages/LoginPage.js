@@ -12,7 +12,7 @@ export default function LoginPage(props){
 
     const { keepsToken } = React.useContext(AuthContext);
     const { keepsImage } = React.useContext(AuthContext);
-    const { keepsName } = React.useContext(AuthContext);
+    const { KeepsName } = React.useContext(AuthContext);
     const {setToken} = React.useContext(AuthContext);
     const { setImage } = React.useContext(AuthContext);
     const { setName } = React.useContext(AuthContext);
@@ -39,7 +39,7 @@ export default function LoginPage(props){
         promise.then(answer => setBenefitsTitle(answer.data.membership.perks));
         promise.then(answer => keepsToken(answer.data.token));
         promise.then(answer => keepsImage(answer.data.membership.image));
-        promise.then(answer => keepsName(answer.data.name));
+        promise.then(answer => KeepsName(answer.data.name));
         promise.then(answer => console.log(answer.data.token));
         promise.catch(error => alert(`${error.response.data.message}`));
     };
