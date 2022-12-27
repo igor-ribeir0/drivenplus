@@ -11,6 +11,13 @@ export const AuthProvider = (props) => {
         localStorage.setItem('getToken', token);
     };
 
+    const imageLocalStorage = localStorage.getItem('getImage');
+    const [getImage, setGetImage] = useState(imageLocalStorage);
+
+    function keepsImage(image){
+        localStorage.setItem('getImage', image);
+    };
+
     const [token, setToken] = useState({
         token: ''
     });
@@ -50,6 +57,7 @@ export const AuthProvider = (props) => {
             value={
                 {
                     keepsToken, getToken, setGetToken,
+                    keepsImage, getImage, setGetImage,
                     token, setToken, 
                     image, setImage, 
                     name, setName, 

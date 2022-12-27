@@ -9,8 +9,8 @@ import React from 'react';
 
 export default function HomePage(props){
     const { memberId } = props;
-    const { token } = React.useContext(AuthContext);
     const { getToken } = React.useContext(AuthContext);
+    const { getImage } = React.useContext(AuthContext);
     const { image } = React.useContext(AuthContext);
     const { name } = React.useContext(AuthContext);
     const { cardCode } = React.useContext(AuthContext);
@@ -52,7 +52,7 @@ export default function HomePage(props){
         <Data>
 
             <Header>
-                <PlanImage src={image.image} />
+                <PlanImage src={getImage} />
                 <Profile src={profileIcon} />
             </Header>
 
