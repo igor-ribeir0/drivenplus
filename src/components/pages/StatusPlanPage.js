@@ -15,7 +15,6 @@ export default function StatusPlanPage(props){
     const { memberId, setMemberId } = props;
     const { idPlan } = useParams();
 
-    const { token } = React.useContext(AuthContext);
     const { setImage } = React.useContext(AuthContext);
     const { setCardCode } = React.useContext(AuthContext);
     const { setCardSecurity } = React.useContext(AuthContext);
@@ -23,6 +22,7 @@ export default function StatusPlanPage(props){
     const { setIdMember } = React.useContext(AuthContext);
     const { setBenefitsTitle } = React.useContext(AuthContext);
     const { setNameCard } = React.useContext(AuthContext);
+    const { getToken } = React.useContext(AuthContext);
 
 
     const [appear, setAppear] = useState(false);
@@ -38,7 +38,7 @@ export default function StatusPlanPage(props){
 
     const config = {
         headers: {
-            "Authorization": `Bearer ${token.token}`
+            "Authorization": `Bearer ${getToken}`
         }
     };
 

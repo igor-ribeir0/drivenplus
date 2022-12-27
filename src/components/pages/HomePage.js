@@ -10,6 +10,7 @@ import React from 'react';
 export default function HomePage(props){
     const { memberId } = props;
     const { token } = React.useContext(AuthContext);
+    const { getToken } = React.useContext(AuthContext);
     const { image } = React.useContext(AuthContext);
     const { name } = React.useContext(AuthContext);
     const { cardCode } = React.useContext(AuthContext);
@@ -21,7 +22,7 @@ export default function HomePage(props){
 
     const config = {
         headers: {
-            "Authorization": `Bearer ${token.token}`
+            "Authorization": `Bearer ${getToken}`
         }
     };
 

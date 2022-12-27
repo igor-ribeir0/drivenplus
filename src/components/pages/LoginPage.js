@@ -11,7 +11,6 @@ export default function LoginPage(props){
     const { setMemberId } = props;
 
     const { keepsToken } = React.useContext(AuthContext);
-    const { token } = React.useContext(AuthContext);
     const {setToken} = React.useContext(AuthContext);
     const { setImage } = React.useContext(AuthContext);
     const { setName } = React.useContext(AuthContext);
@@ -39,10 +38,6 @@ export default function LoginPage(props){
         promise.then(answer => keepsToken(answer.data.token));
         promise.then(answer => console.log(answer.data.token));
         promise.catch(error => alert(`${error.response.data.message}`));
-    };
-    
-    if(token.token === null){
-        keepsToken(token.token);
     };
 
     function goSubscriptions(membership){

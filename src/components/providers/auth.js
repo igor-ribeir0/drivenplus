@@ -4,16 +4,16 @@ export const AuthContext = React.createContext({});
 
 export const AuthProvider = (props) => {
 
-    const [token, setToken] = useState({
-        token: ''
-    });
-
     const tokenLocalStorage = localStorage.getItem('getToken');
+    const [getToken, setGetToken] = useState(tokenLocalStorage);
 
     function keepsToken(token){
         localStorage.setItem('getToken', token);
-        setToken({token: tokenLocalStorage});
     };
+
+    const [token, setToken] = useState({
+        token: ''
+    });
 
     const [image, setImage] = useState({
         image: ''
@@ -49,7 +49,7 @@ export const AuthProvider = (props) => {
         <AuthContext.Provider 
             value={
                 {
-                    keepsToken,
+                    keepsToken, getToken, setGetToken,
                     token, setToken, 
                     image, setImage, 
                     name, setName, 
